@@ -46,6 +46,8 @@ jobs:
         with:
           node-version: 14.17
           cache: 'npm'
+      - name: Install modules
+        run: npm ci
       - name: build storybook
         run: npm run build-storybook
       - name: upload
