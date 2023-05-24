@@ -10,6 +10,24 @@ jobs:
   build:
     # <Not provided for brevity>
     # At a minimum this job should upload artifacts using actions/upload-pages-artifact
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 14.17
+          cache: 'npm'
+      - name: Install modules
+        run: npm ci
+      - name: Install modules
+        run: npm run test
+
+  # Deploy job
+  deploy:
+    # Add a dependency to the build job
+    needs: build
+    if: github.ref == 'refs/heads/master'
+
     # Grant GITHUB_TOKEN the permissions required to make a Pages deployment
     permissions:
       pages: write      # to deploy to Pages
@@ -20,18 +38,15 @@ jobs:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
 
+    # Specify runner + deployment step
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
         with:
           node-version: 14.17
-      - name: Install modules
-        run: npm ci
-      - name: Install modules
-        run: npm run test
+          cache: 'npm'
       - name: build storybook
-        if: github.ref == 'refs/heads/master'
         run: npm run build-storybook
       - name: upload
         uses: actions/upload-pages-artifact@v1
