@@ -1,0 +1,19 @@
+on:
+  workflow_dispatch:
+
+jobs:
+  runs-on: ubuntu-latest
+  build:
+    steps:
+      - name: Test First
+        run: |
+          node --version
+          npm --version
+      - uses: actions/checkout@v3.5.2
+      - uses: actions/setup-node@v3.6.0
+        with:
+          node-version-file: '.nvmrc'
+      - name: Test Second
+        run: |
+          node --version
+          npm --version
