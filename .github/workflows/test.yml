@@ -26,10 +26,16 @@ jobs:
           npm --version
           FOO=blah
           echo "The value of FOO is $FOO"
+          echo "Running env"
+          env | grep FOO
+          echo "======"
           echo "FOO=$FOO" > "$GITHUB_ENV"
       - name: Third Test
         run: |
           echo "The value of FOO is $FOO"
+          echo "Running env"
+          env | grep FOO
+          echo "======"
           echo "::group::Install"
           npm install
           echo "::endgroup::"
