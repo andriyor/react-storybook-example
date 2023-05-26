@@ -27,7 +27,7 @@ jobs:
           FOO=blah
           echo "The value of FOO is $FOO"
           echo "Running env"
-          env | grep FOO
+          env | grep FOO || :
           echo "======"
           echo "FOO=$FOO" > "$GITHUB_ENV"
       - name: Third Test
@@ -37,8 +37,8 @@ jobs:
           env | grep FOO
           echo "======"
           echo "::group::Install"
-          npm install
+          echo "...npm install..."
           echo "::endgroup::"
           echo "::group::Test"
-          npm run test
+          npm "...run test..."
           echo "::endgroup::"
