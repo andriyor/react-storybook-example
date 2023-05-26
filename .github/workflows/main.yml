@@ -47,12 +47,12 @@ jobs:
         with:
           node-version: '18.16.0'
           cache: 'npm'
-        env:
-          NODE_OPTIONS: "--openssl-legacy-provider"
       - name: Install modules
         run: npm ci
       - name: build storybook
-        run: npm run build-storybook
+        run: |
+          NODE_OPTIONS: "--openssl-legacy-provider" \
+            npm run build-storybook
       - name: upload
         uses: actions/upload-pages-artifact@v1
         with:
