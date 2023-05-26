@@ -47,7 +47,9 @@ jobs:
         with:
           node-version-file: '.nvmrc'
           cache: 'npm'
-      - run: echo 'NODE_OPTIONS="--openssl-legacy-provider"' >> $GITHUB_ENV
+      - run: |
+          unset NODE_OPTIONS
+          echo 'NODE_OPTIONS="--openssl-legacy-provider"' >> $GITHUB_ENV
       - name: Install modules
         run: npm ci
       - name: build storybook
