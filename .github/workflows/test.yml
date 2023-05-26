@@ -18,9 +18,27 @@ jobs:
           node-version: 14
       - name: Second Test
         run: |
+          echo "Lets try this out:"
+          echo "::debug::This is some debugging output"
+          echo "And this is regular output"
+          echo "::warning::This should be a warning output"
           node --version
           npm --version
       - name: Third Test
         run: |
+          echo "About to start a group"
+          echo "::group::work"
+          echo "Now its in the group"
           node --version
           npm --version
+          echo "::group::nested groups"
+          sleep 1
+          echo "In a nested group"
+          echo "::endgroup::"
+          echo "Last thing in the group"
+          echo "::endgroup::"
+          echo "Back outside the group"
+          echo "::group::more-work"
+          sleep 1
+          echo "In the second group"
+          echo "::endgroup::"
