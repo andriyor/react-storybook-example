@@ -15,7 +15,7 @@ jobs:
       - uses: actions/checkout@8e5e7e5ab8b370d6c329ec480221332ada57f0ab # v3.5.2
       - uses: actions/setup-node@64ed1c7eab4cce3362f8c340dee64e5eaeef8f7c # v3.6.0
         with:
-          node-version: 14.17
+          node-version-file: '.nvmrc'
           cache: 'npm'
       - name: Install modules
         run: npm ci
@@ -32,6 +32,7 @@ jobs:
     permissions:
       pages: write      # to deploy to Pages
       id-token: write   # to verify the deployment originates from an appropriate source
+      contents: read
 
     # Deploy to the github-pages environment
     environment:
@@ -44,7 +45,7 @@ jobs:
       - uses: actions/checkout@8e5e7e5ab8b370d6c329ec480221332ada57f0ab # v3.5.2
       - uses: actions/setup-node@64ed1c7eab4cce3362f8c340dee64e5eaeef8f7c # v3.6.0
         with:
-          node-version: 14.17
+          node-version-file: '.nvmrc'
           cache: 'npm'
       - name: Install modules
         run: npm ci
