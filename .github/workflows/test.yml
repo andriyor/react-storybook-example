@@ -24,8 +24,11 @@ jobs:
           echo "::warning::This should be a warning output"
           node --version
           npm --version
+          FOO=blah
+          echo "The value of FOO is $FOO"
       - name: Third Test
         run: |
+          echo "The value of FOO is $FOO"
           echo "::group::Install"
           npm install
           echo "::endgroup::"
