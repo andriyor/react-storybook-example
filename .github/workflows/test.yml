@@ -1,3 +1,5 @@
+name: This is my glorious Test
+
 on:
   workflow_dispatch:
 
@@ -40,5 +42,5 @@ jobs:
           echo "...npm install..."
           echo "::endgroup::"
           echo "::group::Test"
-          npm "...run test..."
+          echo "npm ...run test..."
           echo "::endgroup::"
