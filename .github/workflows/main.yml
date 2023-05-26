@@ -51,7 +51,7 @@ jobs:
         run: npm ci
       - name: build storybook
         run: |
-          NODE_OPTIONS: "--openssl-legacy-provider" \
+          NODE_OPTIONS="--openssl-legacy-provider" \
             npm run build-storybook
       - name: upload
         uses: actions/upload-pages-artifact@v1
