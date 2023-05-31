@@ -16,15 +16,14 @@ jobs:
       - uses: actions/setup-node@64ed1c7eab4cce3362f8c340dee64e5eaeef8f7c # v3.6.0
         with:
           node-version-file: '.nvmrc'
-          cache: 'npm'
       - name: Cache NPM dependencies
         uses: actions/cache@v3
-        id: cache-primes
+        id: node_modules
         with:
           path: node_modules
           key: ${{ runner.os }}-node-${{ hashFiles('package-lock.json') }}-${{ hashFiles('.nvmrc') }}
       - name: Install modules
-        if: steps.cache-primes.outputs.cache-hit != 'true'
+        if: steps.node_modules.outputs.cache-hit != 'true'
         run: npm ci
       - name: run test
         run: npm run test
