@@ -1,3 +1,5 @@
+name: react-app
+
 on:
   workflow_dispatch:
   push:
@@ -10,7 +12,6 @@ jobs:
   build:
     # <Not provided for brevity>
     # At a minimum this job should upload artifacts using actions/upload-pages-artifact
-    name: build
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@8e5e7e5ab8b370d6c329ec480221332ada57f0ab # v3.5.2
@@ -32,7 +33,6 @@ jobs:
   # Deploy job
   deploy:
     # Add a dependency to the build job
-    name: deploy
     needs: build
     if: github.ref == 'refs/heads/master'
 
