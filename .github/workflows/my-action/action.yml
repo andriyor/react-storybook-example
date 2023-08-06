@@ -8,6 +8,9 @@ inputs:
   aws_key_id:
     description: 'aws key id'
     required: true
+  gh_token:
+    description: 'github token'
+    required: true
   aws_secret_access_key:
     description: 'aws secret access key'
     required: true
