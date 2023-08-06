@@ -43,6 +43,8 @@ jobs:
         run: |
           NODE_OPTIONS="--openssl-legacy-provider" \
             npm run build-storybook
+      - name: Deploy with aws cli
+        run: aws s3 sync ./storybook-static s3://${{ secrets.AWS_BUCKET }}
       - name: S3 upload
         if: github.ref != 'refs/heads/master'
         id: s3-upload
