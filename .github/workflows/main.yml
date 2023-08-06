@@ -50,7 +50,6 @@ jobs:
         if: github.ref != 'refs/heads/master'
         uses: actions/github-script@v6
         env:
-          OBJECT_KEY: ${{ steps.s3-upload.outputs.object_key }}
           AWS_BUCKET: ${{ secrets.AWS_BUCKET }}
         with:
           script: |
