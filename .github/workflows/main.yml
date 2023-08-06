@@ -43,7 +43,16 @@ jobs:
          aws_bucket: ${{ secrets.AWS_BUCKET }}
          source_dir: 'storybook-static'
       - name: comment
+        uses: actions/github-script@v6
         run: echo ${{ steps.s3-upload.outputs.object_key }}
+        with:
+          script: |
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: '👋 Thanks for reporting!'
+            })
 
   # Deploy job
   deploy:
