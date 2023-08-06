@@ -27,6 +27,8 @@ jobs:
       - name: Install modules
         if: steps.node_modules.outputs.cache-hit != 'true'
         run: npm ci
+      - name: hello
+        run: node hello.js
       - name: run test
         run: npm run test
       - name: build storybook
