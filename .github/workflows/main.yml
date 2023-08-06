@@ -51,13 +51,14 @@ jobs:
         uses: actions/github-script@v6
         env:
           OBJECT_KEY: ${{ steps.s3-upload.outputs.object_key }}
+          AWS_BUCKET: ${{ secrets.AWS_BUCKET }}
         with:
           script: |
             github.rest.issues.createComment({
               issue_number: context.issue.number,
               owner: context.repo.owner,
               repo: context.repo.repo,
-              body: `${process.env.OBJECT_KEY}`
+              body: `https://${process.env.AWS_BUCKET}.s3.amazonaws.com/${process.env.OBJECT_KEY}/index.html`
             })
 
   # Deploy job
