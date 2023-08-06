@@ -43,22 +43,13 @@ jobs:
         run: |
           NODE_OPTIONS="--openssl-legacy-provider" \
             npm run build-storybook
-      - name: S3 upload
+      - name: Deploy with aws cli
         if: github.ref != 'refs/heads/master'
-        id: s3-upload
-        uses: shallwefootball/s3-upload-action@master
-        with:
-         aws_key_id: ${{ secrets.AWS_KEY_ID }}
-         gh_token: ${{ secrets.GH_TOKEN}}
-         aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-         aws_bucket: ${{ secrets.AWS_BUCKET }}
-         source_dir: 'storybook-static'
-         destination_dir: storybook-${{github.event.pull_request.number}}
+        run: aws s3 sync --acl public-read ./storybook-static s3://${{ secrets.AWS_BUCKET }}/storybook-${{github.event.pull_request.number}}
       - name: comment
         if: github.ref != 'refs/heads/master'
         uses: actions/github-script@v6
         env:
-          OBJECT_KEY: ${{ steps.s3-upload.outputs.object_key }}
           AWS_BUCKET: ${{ secrets.AWS_BUCKET }}
         with:
           script: |
@@ -66,7 +57,7 @@ jobs:
               issue_number: context.issue.number,
               owner: context.repo.owner,
               repo: context.repo.repo,
-              body: `https://${process.env.AWS_BUCKET}.s3.amazonaws.com/${process.env.OBJECT_KEY}/index.html`
+              body: `https://${process.env.AWS_BUCKET}.s3.amazonaws.com/storybook-${{github.event.pull_request.number}}/index.html`
             })
 
   # Deploy job
