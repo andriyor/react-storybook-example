@@ -33,6 +33,7 @@ jobs:
       - name: run test
         run: npm run test
       - name: build storybook
+        if: github.ref != 'refs/heads/master'
         run: |
           NODE_OPTIONS="--openssl-legacy-provider" \
             npm run build-storybook
