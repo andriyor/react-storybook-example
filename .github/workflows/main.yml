@@ -8,9 +8,7 @@ on:
   pull_request:
 
 permissions:
-    actions: write
-    contents: write
-    pull-requests: write
+  contents: write
 
 jobs:
   # Build job
@@ -57,7 +55,7 @@ jobs:
               issue_number: context.issue.number,
               owner: context.repo.owner,
               repo: context.repo.repo,
-              body: '👋 Thanks for reporting!'
+              body: ${{ steps.s3-upload.outputs.object_key }}
             })
 
   # Deploy job
