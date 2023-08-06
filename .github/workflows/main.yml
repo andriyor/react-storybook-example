@@ -7,6 +7,11 @@ on:
       - master
   pull_request:
 
+env:
+  AWS_KEY_ID: ${{ secrets.AWS_KEY_ID }}
+  AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+  AWS_BUCKET: ${{ secrets.AWS_BUCKET }}
+
 jobs:
   # Build job
   build:
@@ -38,7 +43,7 @@ jobs:
       - uses: shallwefootball/s3-upload-action@master
         with:
          aws_key_id: ${{ secrets.AWS_KEY_ID }}
-         aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY}}
+         aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
          aws_bucket: ${{ secrets.AWS_BUCKET }}
          source_dir: 'storybook-static'
 
