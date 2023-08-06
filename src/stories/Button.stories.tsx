@@ -26,7 +26,7 @@ export const Primary = {};
 // @ts-ignore
 Primary.args = {
   primary: true,
-  label: 'Buttonkek',
+  label: 'Button',
 };
 //
 // export const Secondary = Template.bind({});
