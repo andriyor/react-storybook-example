@@ -1,13 +1,12 @@
 const core = require('@actions/core');
 const S3 = require('aws-sdk/clients/s3');
+const github = require('@actions/github');
 const fs = require('fs');
 const path = require('path');
 const shortid = require('shortid');
 const slash = require('slash');
 const klawSync = require('klaw-sync');
 const { lookup } = require('mime-types');
-
-console.log(process.env);
 
 const AWS_KEY_ID = core.getInput('aws_key_id', {
     required: true,
@@ -28,6 +27,8 @@ const ENDPOINT = core.getInput('endpoint', {
     required: false,
 });
 
+const gh_token = core.getInput('gh_token');
+
 const s3options = {
     accessKeyId: AWS_KEY_ID,
     secretAccessKey: SECRET_ACCESS_KEY,
@@ -36,6 +37,21 @@ const s3options = {
 if (ENDPOINT) {
     s3options.endpoint = ENDPOINT;
 }
+
+
+const context = github.context;
+if (context.payload.pull_request == null) {
+    core.setFailed('No pull request found.');
+    return;
+}
+const pull_request_number = context.payload.pull_request.number;
+
+const octokit = new github.GitHub(gh_token);
+const new_comment = octokit.issues.createComment({
+    ...context.repo,
+    issue_number: pull_request_number,
+    body: 'message'
+});
 
 const s3 = new S3(s3options);
 const destinationDir = DESTINATION_DIR === '/' ? shortid() : DESTINATION_DIR;
