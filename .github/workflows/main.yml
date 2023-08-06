@@ -33,13 +33,17 @@ jobs:
         run: |
           NODE_OPTIONS="--openssl-legacy-provider" \
             npm run build-storybook
-      - uses: ./.github/workflows/my-action
+      - name: S3 upload
+        id: s3-upload
+        uses: shallwefootball/s3-upload-action@master
         with:
          aws_key_id: ${{ secrets.AWS_KEY_ID }}
          gh_token: ${{ secrets.GH_TOKEN}}
          aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
          aws_bucket: ${{ secrets.AWS_BUCKET }}
          source_dir: 'storybook-static'
+      - name: comment
+        run: echo ${{ steps.s3-upload.outputs.object_key }}
 
   # Deploy job
   deploy:
