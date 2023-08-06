@@ -70,7 +70,7 @@
     "mime-types": "^2.1.35",
     "prop-types": "^15.8.1",
     "shortid": "^2.2.16",
-    "slash": "^5.1.0",
+    "slash": "^3.0.0",
     "webpack": "^5.75.0"
   }
 }
