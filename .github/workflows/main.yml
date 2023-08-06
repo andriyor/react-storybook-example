@@ -42,9 +42,10 @@ jobs:
          aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
          aws_bucket: ${{ secrets.AWS_BUCKET }}
          source_dir: 'storybook-static'
+      - name: echo
+        run: echo ${{ steps.s3-upload.outputs.object_key }}
       - name: comment
         uses: actions/github-script@v6
-        run: echo ${{ steps.s3-upload.outputs.object_key }}
         with:
           script: |
             github.rest.issues.createComment({
