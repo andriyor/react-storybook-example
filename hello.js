@@ -7,6 +7,8 @@ const slash = require('slash').default;
 const klawSync = require('klaw-sync');
 const { lookup } = require('mime-types');
 
+console.log(process.env);
+
 const AWS_KEY_ID = core.getInput('aws_key_id', {
     required: true,
 });
