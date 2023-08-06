@@ -40,18 +40,16 @@ if (ENDPOINT) {
 
 
 const context = github.context;
-if (context.payload.pull_request == null) {
-    core.setFailed('No pull request found.');
-    return;
-}
-const pull_request_number = context.payload.pull_request.number;
+if (context.payload.pull_request) {
+    const pull_request_number = context.payload.pull_request.number;
 
-const octokit = new github.GitHub(gh_token);
-const new_comment = octokit.issues.createComment({
-    ...context.repo,
-    issue_number: pull_request_number,
-    body: 'message'
-});
+    const octokit = new github.GitHub(gh_token);
+    octokit.issues.createComment({
+        ...context.repo,
+        issue_number: pull_request_number,
+        body: 'message'
+    });
+}
 
 const s3 = new S3(s3options);
 const destinationDir = DESTINATION_DIR === '/' ? shortid() : DESTINATION_DIR;
