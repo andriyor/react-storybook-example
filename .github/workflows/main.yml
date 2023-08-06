@@ -45,7 +45,7 @@ jobs:
             npm run build-storybook
       - name: Deploy with aws cli
         if: github.ref != 'refs/heads/master'
-        run: aws s3 sync ./storybook-static s3://${{ secrets.AWS_BUCKET }}/storybook-${{github.event.pull_request.number}}
+        run: aws s3 sync --acl public-read ./storybook-static s3://${{ secrets.AWS_BUCKET }}/storybook-${{github.event.pull_request.number}}
       - name: comment
         if: github.ref != 'refs/heads/master'
         uses: actions/github-script@v6
