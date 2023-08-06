@@ -5,7 +5,10 @@ on:
   push:
     branches:
       - master
-  pull_request_target:
+  pull_request:
+
+permissions:
+    actions: write
 
 jobs:
   # Build job
