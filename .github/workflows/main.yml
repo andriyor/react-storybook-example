@@ -37,6 +37,7 @@ jobs:
           NODE_OPTIONS="--openssl-legacy-provider" \
             npm run build-storybook
       - name: S3 upload
+        if: github.ref != 'refs/heads/master'
         id: s3-upload
         uses: shallwefootball/s3-upload-action@master
         with:
@@ -47,6 +48,7 @@ jobs:
          source_dir: 'storybook-static'
          destination_dir: storybook-${{github.event.pull_request.number}}
       - name: comment
+        if: github.ref != 'refs/heads/master'
         uses: actions/github-script@v6
         env:
           OBJECT_KEY: ${{ steps.s3-upload.outputs.object_key }}
